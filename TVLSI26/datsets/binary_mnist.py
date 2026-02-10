@@ -3,8 +3,8 @@ from torchvision import datasets, transforms
 from pathlib import Path
 from typing import cast
 
-class BinaryMNIST:
-    def __init__(self, data_path: str = '/data', index0: int = 0, index1: int = 1, image_size: int = 28):
+class MNISTdata:
+    def __init__(self, data_path: str = '/data', FULL_MNIST = False, image_size: int = 28, index0: int = 0, index1: int = 1):
         self.data_path = data_path
         self.index0 = index0
         self.index1 = index1
@@ -38,18 +38,21 @@ class BinaryMNIST:
         self.mnist_test = datasets.MNIST(self.data_path, train=False, download=True, transform=self.transform)
         self.mnist_test_noisy = datasets.MNIST(self.data_path, train=False, download=True, transform=self.noisy_infer_transform)
 
-        for dataset in (self.mnist_train, self.mnist_test, self.mnist_test_noisy):
-            indices = indices = (dataset.targets == self.index0) | (dataset.targets == self.index1) 
-            dataset.data, dataset.targets = dataset.data[indices], dataset.targets[indices]
-            dataset.targets = torch.where(dataset.targets == self.index0, torch.tensor(0), torch.tensor(1))
+        if FULL_MNIST == False:
+            for dataset in (self.mnist_train, self.mnist_test, self.mnist_test_noisy):
+                indices = indices = (dataset.targets == self.index0) | (dataset.targets == self.index1) 
+                dataset.data, dataset.targets = dataset.data[indices], dataset.targets[indices]
+                dataset.targets = torch.where(dataset.targets == self.index0, torch.tensor(0), torch.tensor(1))
 
     def get_image_size(self):
         return self.image_size
     
     def get_index0(self):
+        assert (FULL_MNIST == False), "The get_index methods are only applicable when the requested dataset is binary."
         return self.index0
     
     def get_index1(self):
+        assert (FULL_MNIST == False), "The get_index methods are only applicable when the requested dataset is binary."
         return self.index1
 
     def get_train_data(self):
@@ -84,4 +87,5 @@ class BinaryMNIST:
 
         file_path: Path = Path(f"{self.data_path}/mnist_test_set_{self.index0}_{self.index1}.pt")
         torch.save({'images': images, 'labels': labels}, str(file_path)) # type: ignore
+
         print(f"✅ MNIST test set saved to: {file_path}")
