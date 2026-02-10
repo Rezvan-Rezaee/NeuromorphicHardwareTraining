@@ -1,7 +1,7 @@
 The files in this repository are associated with the paper "Hardware-Aware Offline Training of CTT-Based Neuromorphic Hardware".
 
 Two different neuron models are present:
-  1. A neuron model that exactly matches the digital LIF neuron in the neuromorphic hardware described in this paper." With constants that replicate our Cadence hardware simulations.
+  1. [digLIF](TVLSI26/neuron_models/digLIF.py) A neuron model that exactly matches the digital LIF neuron in the neuromorphic hardware described in this paper." With constants that replicate our Cadence hardware simulations. 
   2. A more general LIF neuron model that could represent other implementations. This was adopted to show the generalizability of the hardware-aware training approach. A variety of LIF implementations exist, and our results showed that LIF neuron hardware implementations require some flexibility in setting the threshold voltage and decay rate to be used for different tasks. Learning would be much easier the closer we get to actual software-based neural networks with many tunable parameters. Otherwise, acquiring an equivalent performance to ANNs requires a lot more architecture exploration.
 
 Two noise injection methodologies are implemented:
