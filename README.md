@@ -6,7 +6,7 @@ Two different neuron models are present:
 
 Two noise injection methodologies are implemented:
   1. [Noise pool generation](TVLSI26/ctt_weights/noisePool.py): sweeps different hardware-related parameters such as temperature, PVT changes, and programming imprecision (based on their unique distribution). Then, it creates an array with all the possible values for different network parameters (representing hardware components).
-     [Example variations in the drain current of CTTs based on hardware non-idealities](TVLSI26/ctt_weights/ctt_weight_variations.png) 
+     [Example variations in the drain current of CTTs based on hardware non-idealities](TVLSI26/ctt_weights/ctt_weight_variations.png) This also includes the formulas used to calculate effects of different noisy hardware parameters on the drain current (I_D).
   3. Sensitivity model: based on analytical calculations of combining the effects of variation in multiple parameters (weights, neuron constants) on the parameter of interest. It first samples a value from a pre-defined distribution for each hardware-based variant and then calculates their combined effect.
 
 
