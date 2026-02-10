@@ -1,4 +1,5 @@
 The files in this repository are associated with the paper "Hardware-Aware Offline Training of CTT-Based Neuromorphic Hardware".
+For inquiries, contact: zahra.mohammadrezaee@mail.mcgill.ca
 
 The [Binary classifier](TVLSI26/Binary_MNIST_noise_aware.ipynb) framework's full functionality, using [noise model](TVLSI26/ctt_weights/noisePool.py), can be described by:
 
