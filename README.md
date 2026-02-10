@@ -2,7 +2,7 @@ The files in this repository are associated with the paper "Hardware-Aware Offli
 
 The framework's full functionality can be described by:
 
-<img src="TVLSI26/framework.png" alt="System overview" width="600">
+<img src="TVLSI26/framework.png" alt="System overview" width="400">
 
 
 Neuron models:
