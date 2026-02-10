@@ -1,7 +1,8 @@
 The files in this repository are associated with the paper "Hardware-Aware Offline Training of CTT-Based Neuromorphic Hardware".
 
 The framework's full functionality can be described by:
-![training_framework_mnist](TVLSI26/framework.png)
+
+<img src="TVLSI26/framework.png" alt="System overview" width="600">
 
 
 Neuron models:
