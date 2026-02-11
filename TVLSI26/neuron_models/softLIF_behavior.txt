@@ -1,0 +1,48 @@
+10-TIMESTEP SPIKING WINDOW VS STEADY-STATE SOFTLIF (RATE) SURROGATE
+
+1) DISCRETE-TIME WINDOW DEFINITION
+- Discrete simulation timestep: Δt (seconds per step)
+- Number of timesteps: T
+- Total simulated time:
+  T_total = T · Δt
+
+Example:
+  Δt = 1 ms, T = 10  →  T_total = 10 ms
+
+2) EXPONENTIAL SETTLING OF THE LIF MEMBRANE STATE
+For a passive membrane (RC / LIF subthreshold dynamics) under constant drive, the membrane potential approaches its steady value exponentially:
+  u(t) = u_rest + R I0 (1 − exp(−t/τ_m))
+
+Equivalently, the fraction remaining to steady state after time t is:
+  ε(t) = exp(−t/τ_m)
+
+Example time-scale matching:
+Choose τ_m such that T_total spans several τ_m.
+If τ_m = 2 ms and T_total = 10 ms, then:
+  t/τ_m = 10/2 = 5
+  ε = exp(−5) ≈ 0.0067
+So the membrane is within ~0.67% of steady state (≈99.3% settled) by the end of the 10-step window.
+
+3) ALIGNMENT OF SPIKING LIF WITH A STEADY-STATE RATE SURROGATE
+Under constant suprathreshold drive, LIF neurons exhibit tonic spiking with a well-defined firing-rate vs input relationship (f–I curve). A steady-state rate surrogate (e.g., SoftLIF/LIFRate variants) is intended to approximate this steady mapping rather than transient responses. Therefore, selecting τ_m relative to T_total so that the membrane reaches its steady regime supports the use of a short spiking window as an approximation to the rate model.
+
+4) SPIKE-COUNT READOUT ACCURACY AND POPULATION AVERAGING
+If spikes are read out via spike counts in the window and a Poisson baseline is assumed for spike-count variability, then for spike count N in the window:
+  E[N] = λ
+  Var(N) = λ
+
+If a population code averages across M approximately independent neurons:
+  N_bar = (1/M) Σ_i N_i
+
+Then the variance of the average scales as:
+  Var(N_bar) = (1/M^2) Σ_i Var(N_i)  ≈  (1/M^2) · M · λ  =  λ / M
+(assuming similar λ and approximate independence)
+
+So, to increase this certainty, population encoding can be adopted. Even if a single neuron’s 10 ms window yields limited spike counts, averaging across many neurons can reduce estimation variance, making a short-window rate estimate more compatible with a steady-state rate surrogate.
+
+
+More on LIF behavior:
+[1] EPFL Neuronal Dynamics: https://neuronaldynamics.epfl.ch/online/Ch1.S3.html
+[2] LIF exercises / f–I behavior overview: https://neuronaldynamics-exercises.readthedocs.io/en/latest/exercises/leaky-integrate-and-fire.html
+[3] Poisson variability baseline discussion: https://pmc.ncbi.nlm.nih.gov/articles/PMC6675384/
+[4] Accuracy–latency tradeoffs in SNN contexts: https://pmc.ncbi.nlm.nih.gov/articles/PMC10030499/
